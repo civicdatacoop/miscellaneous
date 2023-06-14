@@ -1,0 +1,3296 @@
+{
+    "dbo.AmsAppointment": {
+        "table_description": "This table contains information about booked appointments (eg: date, time and location). A record in this table will link to one or more records in the AmsAppointmentContact table to store information about the client(s) attending the appointment.",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "GenHCPCode": "HCP Code of main HCP appointment is with",
+            "ClinicID": "ID of clinic appointment is in, if clinic appointment",
+            "AppointmentDate": "Intended date of appointment",
+            "IntendedTime": "Intended time of appointment",
+            "Stream": "If clinic appointment, the stream number that the appointment is in, otherwise 0.",
+            "IntendedDuration": "Intended length of appointment in minutes",
+            "Location": "Location of appointment, from drop down",
+            "AppointmentType": "Type of appointment, from drop down",
+            "Comment": "Comments about appointment. Free Text.",
+            "CancellationDateTime": "If cancelled, date at which the appointment was cancelled.",
+            "CancellationReason": "If cancelled, reason for appointment cancellation, from drop down",
+            "CancellationBy": "If cancelled, user that cancelled appointment",
+            "NonClientAppointmentFlag": "Set to 1 if appointment is with a carer",
+            "TeamAppointment": "Set to 1 if appointment is a team appointment",
+            "BookedAppointment": "When appointment offer was made",
+            "TransportRequired": "Set to 1 if appointment requires transport to PCT",
+            "UBRN": "The appointment eReferrals reference",
+            "IsImmsApp": "Immunisation appointment indicator",
+            "AMSClinicSlotID": "The internal Rio identifier for this clinic slot",
+            "AMSClinicSectionID": "The internal Rio identifier for this clinic section",
+            "Status": "eReferrals status of appointment. Values are\n1 = Pending Booked\n2 = Fully Booked\n3 = Booked in Rio Only\n4 = Pending Cancellation on Spine\n5 = Fully Cancelled\n6 = Pending Cancellation in Rio",
+            "ScratchDateTimeMoved": "Date & time of rescheduling",
+            "RescheduleReason": "Reason for rescheduling the appointment",
+            "RescheduledFromSeqID": "Original appointment Sequence ID",
+            "RepeatDefinitionSeqID": "Appointment repeat definition",
+            "RepeatAppOccurance": "Number of repeated occurrences",
+            "BookedByUser": "User who booked appointment",
+            "BookedDateTime": "Datestamp of appointment creation",
+            "BookedStatus": "Status of booking",
+            "Urgency": "Urgency of appointment",
+            "CancellationComment": "Cancellation comment",
+            "CancellationOnBehalfOf": "Person who cancelled appointment",
+            "CancellationDateTimestamp": "Datestamp of cancellation",
+            "ClientRemovedFlag": "Client Removed from appointment flag",
+            "AppointmentDateTime": "Appointment date and time",
+            "LastMessageSentOn": "Last message sent for eReferrals",
+            "USRN": "Unique identifier for eReferrals",
+            "IsDevCheckApp": "Appointment is a development check appointment"
+        },
+        "free_text_columns": [
+            "Comment",
+            "CancellationComment"
+        ],
+        "other_identifiable_columns": [
+            "UBRN",
+            "USRN"
+        ],
+        "client_id": [],
+        "date_time": [
+            "AppointmentDate",
+            "IntendedTime",
+            "CancellationDateTime",
+            "ScratchDateTimeMoved",
+            "AppointmentDateTime",
+            "LastMessageSentOn"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.AmsAppointmentBookedStatus": {
+        "table_description": "This table contains available options used in the identifying the status of bookings stored against appointments and activities",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Record description",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsAppointmentConsultationMedium": {
+        "table_description": "This table contains a collection of records identifying the medium of consultation between the HCP and the patient(s) booked into the appointment",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code of consultation medium",
+            "IndirectActivity": "Medium is not a direct client contact"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsAppointmentContact": {
+        "table_description": "This table contains information about clients attending appointments including the outcome and the actual duration. A record in this table may be linked to a record in the Referral table to associate it with a clients' referra",
+        "columns_descriptions": {
+            "SequenceID": "Associated Appointment Record",
+            "ClientID": "The internal Rio identifier for this client",
+            "ReferralID": "ID of Referral appointment is under (0 if referrals not required and no referral)",
+            "InitialContactFlag": "Set to 1 if the first attended appointment under a referral. Appointments not under any referral are all considered to be referral 0",
+            "ActualTime": "Actual time appointment took place at",
+            "ActualDuration": "Actual duration of appointment entered on outcome.",
+            "ArrivalTime": "Same as ActualTime",
+            "Outcome": "Outcome Code for appointment. Entered on drop down.",
+            "OutcomeComment": "Comments entered on outcome. Free Text",
+            "CancellationDateTime": "If cancelled, date at which the appointment was cancelled at.",
+            "CancellationReason": "If cancelled, reason for appointment cancellation, from drop down",
+            "CancellationBy": "If cancelled, user that cancelled appointment",
+            "NonClientAppointmentFlag": "Set to 1 if appointment is with a carer",
+            "FaceToFaceContact": "Set to 1 if appointment is face to face with client. Check box.",
+            "StaffProfessionalGroup": "Staff professional group Code of HCP appointment is with - Community appointments only",
+            "ContactID": "Unique identifier for the row",
+            "TimeStamps": "Used internally by Rio to control concurrent record access",
+            "CancellationLetterType": "Cancellation letter type, as entered on cancellation screen. Prompt not displayed if GenCancellationLetterType has no entries",
+            "AppointmentConsultationMedium": "Appointment consultation medium",
+            "ProxyContact": "Proxy Contact",
+            "ContactTransportID": "Transport contact",
+            "ContactInterpreterID": "Interpreter contact",
+            "SecondArrivalTime": "Second arrival time",
+            "AppointmentComment": "General Appointment comment",
+            "BookedStatus": "Appointment booking status",
+            "InterpreterStatus": "Status of interpreter\n(a) Booked\n(b) Required",
+            "InterpreterComment": "InterpreterComment",
+            "InterpreterLanguage": "Required interpreter language",
+            "TransportStatus": "Hard Coded by software with the below values:\n(a) NotReq = Not Required\n(b) Required = Transport Required\n(c) Booked = Transport Booked\n(d) Cancelled = Transport Cancelled",
+            "TransportComment": "Notes for Transport",
+            "CancellationComment": "Cancellation comment",
+            "CancellationOnBehalfOf": "HCP cancelling appointment",
+            "CancellationDateTimestamp": "Internal datestamp of cancellation",
+            "IsFamilyMember": "Attendee is a family member of client",
+            "DischargeReport": "OP Discharge report required or not",
+            "InviteType": "Appointment Invitation Status\n(a) 1 - Attended/New Appointment contact\n(b) 2 - Contribute\n(c)3 - Not Invited\n(d) 4 - Historical (pre RiO7)",
+            "RelatedClientID": "Related Client",
+            "ePathwayID": "Associated ePathway",
+            "IMHA": "Independent Mental Health Advocacy (not in use)",
+            "PerinatalMhAss": "Perinatal Mental Health Assistence (not in use)",
+            "ReasonableAdjMade": "Reasonable adjustment made (not in use)",
+            "IMCA": "Independent Mental Capacity Advocate (not in use)"
+        },
+        "free_text_columns": [
+            "OutcomeComment",
+            "CancellationLetterType",
+            "AppointmentComment",
+            "InterpreterComment",
+            "TransportComment",
+            "CancellationComment"
+        ],
+        "other_identifiable_columns": [
+            "ContactTransportID",
+            "ContactInterpreterID"
+        ],
+        "client_id": [
+            "ClientID",
+            "RelatedClientID"
+        ],
+        "date_time": [
+            "ActualTime",
+            "ArrivalTime",
+            "CancellationDateTime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.AmsAppointmentType": {
+        "table_description": "This table contains a list of possible appointment types.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "CDSCode": "CDS Code of appointment type. Used for reporting purposes",
+            "NationalCode": "National code of appointment type",
+            "IsOutPatient": "Flag to identify if appointment is for outpatients. Used for CDS reporting purposed",
+            "IAPT_ApptType": "IAPT Appointment Code",
+            "NationalCode_CIDS": "CSDS National code",
+            "FirstAppointmentType": "Flag to indicate the appointment type is a first appointment",
+            "OCCollectSpecimensOnOutcome": "Orders collection flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsAppointmentUrgency": {
+        "table_description": "The AmsAppointmentUrgency table contains a list of urgencies related to an appointment.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Record description",
+            "Default": "Indicates the default appointment urgency",
+            "Deleted": "Logically deleted flag",
+            "SortOrder": "Picklist sort order"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsClinicSlot": {
+        "table_description": "Description of Clinic Slot",
+        "columns_descriptions": {
+            "AmsClinicSlotID": "Clinic appointment slot ID",
+            "AmsClinicTemplateSectionID": "AmsClinicTemplateSession SequenceID",
+            "UBRN": "The appointment eReferrals reference",
+            "StartDateTime": "Start of the slot",
+            "Duration": "Expected duration in minutes",
+            "EndDateTime": "End of the slot",
+            "StreamNo": "Number of stream"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "UBRN"
+        ],
+        "client_id": [],
+        "date_time": [
+            "StartDateTime",
+            "EndDateTime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.AmsClinicTemplate": {
+        "table_description": "This table contains core information about a clinic including the name, location and the lead HCP responsible for the clinic.",
+        "columns_descriptions": {
+            "ClinicID": "The internal Rio identifier for the Clinic",
+            "CodeDescription": "Description",
+            "AmsClinicTypeCode": "If not a team clinic, the type Code of the clinic",
+            "GenLocationCode": "Location Code of clinic. Drop down.",
+            "LeadGenHCPCode": "HCP Code of lead HCP",
+            "PatientArea": "Patient area of clinic. Drop down.",
+            "DayCareType": "Day care type. May be \u201cFacility\u201d or \u201cWard\u201d as selected from drop down.",
+            "Comment": "Free Text comment",
+            "Deleted": "Logically deleted flag",
+            "ReferralRequired": "Set to 1 if a valid referral is required for the clinic",
+            "KT31_YPC": "If clinic is to be included in KT31 report (obsolete field - retired report)",
+            "TeamCode": "If a team clinic, Code of team clinic ",
+            "IWSUser": "Set to 1 if included on Interactive Worksheet",
+            "ClinicGroupCode": "Clinic group of clinic",
+            "CheckAppClash": "Set to 1 if checking is performed",
+            "PrintMethod": "Print method; Available system values are\n1: Client,\n2: Server,\n3: Client & Server",
+            "AcceptSpineCaseLoad": "Clinic Allows Spine Case Load access",
+            "SequenceID": "Unique identifier for the row",
+            "ExcludeBankHolidays": "Bank holidays excluded",
+            "AllowUnscheduled": "Allow unscheduled appointments",
+            "AllowSecondArrival": "Allow second arrivals",
+            "AllowRebookingPrompt": "Allow rebooking of appointments if missed",
+            "MinSlotLength": "Minimum slot length",
+            "EditLock": "Lock Edit",
+            "DateCreated": "Creation Date",
+            "TemplateFlag": "Template flag",
+            "PublishLeadHCP": "Display lead HCP",
+            "OCCanTakeSamples": "Orders collection flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsClinicTemplateSection": {
+        "table_description": "This table stores information about the timings of a particular stream within a clinic eg. Start and end time, the default slot length and default appointment type. ",
+        "columns_descriptions": {
+            "ClinicID": "ID of Clinic ",
+            "StartDate": "Start date of section",
+            "Stream": "Stream number",
+            "StartTime": "Start time of section",
+            "EndTime": "End time of section",
+            "SlotLength": "Length of appointment slots",
+            "DefaultAmsAppointmentTypeCode": "Default appointment Code, from drop down",
+            "SequenceID": "Unique identifier for the row",
+            "Location": "Location of clinic template section",
+            "FaceToFaceContact": "Face to face contact Identifier",
+            "SessionID": "SessionID",
+            "EndDate": "End date of the section",
+            "DefaultAmsActivity": "Default activity code",
+            "ForegroundColourID": "System color",
+            "BackgroundColourID": "System color",
+            "VisualIndicatorCode": "Visual indicator",
+            "StreamID": "Clinic stream ID",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "StartDate",
+            "StartTime",
+            "EndTime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.AmsClinicTemplateSession": {
+        "table_description": "This table contains information about the operating dates of clinics and how many streams will be operating concurrently.",
+        "columns_descriptions": {
+            "ClinicID": "ID of Clinic",
+            "StartDate": "Start date of session",
+            "EndDate": "End date of session",
+            "NumberOfStreams": "Number of streams in clinic for this session",
+            "OverBookingFlag": "Set to 1 if overbooking is allowed",
+            "Comment": "Free Text comment",
+            "SequenceID": "Unique identifier for the row",
+            "RepeatDefinitionSeqID": "Session has a repeat appointment definition"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "StartDate",
+            "EndDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.AmsClinicType": {
+        "table_description": "This table contains a list of all available clinic types. ",
+        "columns_descriptions": {
+            "AmsClinicTypeCode": "Clinic type Code",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsIMCAReason": {
+        "table_description": "Information about Independent Mental Capacity Advocate",
+        "columns_descriptions": {
+            "Code": "Internal system code",
+            "CodeDescription": "Meaning of the code or description of the situation (regarding IMCA)",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code for the situation"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsIMHAReason": {
+        "table_description": "Information about Independent Mental Health Advocate",
+        "columns_descriptions": {
+            "Code": "Internal system code",
+            "CodeDescription": "Meaning of the code or description of the situation (regarding IMHA)",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code for the situation"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsOutcome": {
+        "table_description": "This table contains a list of possible appointment outcomes.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code of outcome",
+            "DNA": "Set to 1 if indicate if outcome is classed as Did Not Attend.",
+            "RemoveRefListFlag": "Automatically removes associated appointment referral",
+            "DischargeIndicator": "If set to 1 this will automatically display the discharge hyperlink to the associated referral.",
+            "IWP": "Interactive Worksheet Priority flag ",
+            "RemoveFromWaitingList": "Set to 1 to remove the associated referral from the associated waiting list on outcome",
+            "RemoveFromRTTPathway": "Set to 1 to remove the associated referral from the RTT waiting list on outcome",
+            "SortOrder": "Picklist display sort order",
+            "AppointmentConsultationMedium": "The medium used by the consultant for the appointment",
+            "AllowRebooking": "Bit flag to allow rebooking",
+            "ReferralDischarge": "Bit flag to allow discharge of initial referral"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsPatientArea": {
+        "table_description": "This table contains a list of all patient areas.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "ValidForClinic": "Set to 1 if valid for Clinic Appointments",
+            "ValidForDiary": "Set to 1 if valid for Diary Appointments",
+            "AvailableHCPType": "Referral HCP Types, values are\n0: only non-consultants may be referred to.\n1: only consultants may be referred to.\n2: both consultants and non-consultants may be referred to.",
+            "Deleted": "Logically deleted flag",
+            "IsDayCare": "Set to 1 if Day Care patient area",
+            "IsOutPatient": "Set to 1 if Outpatient patient area",
+            "IsCommunity": "Set to 1 if Community patient area",
+            "IncBookedAppointment": "Set to 1 if booked appointment included",
+            "ClinicPriority": "Clinic Priority flag",
+            "MandatoryTeam": "Set to 1 if mandatory team",
+            "TeamHCPNotRequired": "Set to 1 if team HCP not required",
+            "NDTMSFlag": "National Drug treatment Service indicator",
+            "IsInPatient": "Set to 1 if inpatient"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsReferral": {
+        "table_description": "",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "ReferralNumber": "Referral Number",
+            "ReferralSource": "Referral Source Code from drop down",
+            "ReferringGP": "Code of GP if referred by a GP",
+            "ReferringConsultant": "Code of HCP if referred by consultant. The link used is dependent on the behaviour of the referral source. If AmsReferralSource. Behaviour is set to CS then the ReferringConsultant column is derived from GenHospitalConsultant.ConsultantID. Otherwise if AmsReferralSource.Behaviour is set to CH then the column is GenHCP.GenHCPCode",
+            "Referrer": "Free Text referrer, for when other source is used",
+            "TeamReferredTo": "Code of team referred to if Team Referra",
+            "ServiceReferredTo": "Code of any Service the referral is linked to (obsolete field)",
+            "HCPReferredTo": "Deprecated field - join onto AmsReferralAllocation for correct HCP allocation.",
+            "SpecialtyReferredTo": "Specialty Code of Specialty referred to",
+            "ReferralActionDate": "Referral Action Date",
+            "ReferralDateTime": "Referral Date Time",
+            "Urgency": "Urgency Code of referral",
+            "ReferralComment": "Free Text comment",
+            "DischargeDateTime": "Discharge Date Time",
+            "DischargeReason": "Discharge Reason Code ",
+            "SequenceID": "Unique identifier for the row",
+            "DischargeHCP": "HCP Code of HCP who discharged referral",
+            "DischargeComment": "Free Text discharge comment",
+            "ClientCareSpell": "Associated Care spell for Contacts module",
+            "ReferralReason": "Referral Reason Code from drop down",
+            "AdministrativeCategory": "Administrative category Code from drop down",
+            "PatientArea": "Patient Area Code",
+            "RemovalCode": "Method of removal: 'AmsDisc' or 'Outcome'",
+            "RemovalUser": "User referral was removed by ",
+            "RemovalDateTime": "Date referral was removed",
+            "ReferralReceivedDate": "Date referral was received",
+            "ReferralAllocation": "PCT Code of client at time of referral",
+            "DischargeAllocation": "PCT Code of client at time of discharge",
+            "HcpAllocationDate": "Deprecated. See AmsReferralAllocation",
+            "ReferralAcceptedDate": "Date of referral acceptance",
+            "IWSComment": "Comment for interactive worksheet. Free Text.",
+            "IWSHeld": "Date referral was placed on hold on Interactive Worksheet",
+            "ReferrerOther": "Free Text field for other referrer",
+            "ReferringGPPracticeCode": "Practice Code of referring GP",
+            "ExternalReferralId": "External referral for Contacts module",
+            "LikelyFunder": "Private funding indicator",
+            "EnquiryNumber": "Identifier for initial enquiry",
+            "ReferredWard": "Ward referred from",
+            "ReferredConsultant": "Consultant Referred from",
+            "DischargeAddressLine1": "Client Discharge Address",
+            "DischargeAddressLine2": "Client Discharge Address",
+            "DischargeAddressLine3": "Client Discharge Address",
+            "DischargeAddressLine4": "Client Discharge Address",
+            "DischargeAddressLine5": "Client Discharge Address",
+            "DischargePostCode": "Client Discharge Post Code",
+            "LikelyLegalStatus": "Client Likely Legal Status",
+            "CABReferral": "Set to 1 if CAB Referral",
+            "DischargedOnAdmission": "Set to 1 if patient discharged on admission",
+            "WaitingListID": "Associated Waiting list",
+            "RTTCode": "Associated RTT waiting list",
+            "ReferringOrganisationCode": "Organisation code\nAs entered through referral details screen",
+            "CareProfessionalStaffGroup": "Staff Group",
+            "OtherReferralReason": "Other Referral Reason",
+            "GenOverseasStatus": "Overseas Visitor Status",
+            "ReferringHospitalCode": "Referring Hospital code",
+            "IWSCommentUser": "Rio user who added Interactive Worksheet comment",
+            "ContractIdentifier": "Contract in use",
+            "GenSpecialtyCodeFrom": "Contract Specialty",
+            "GenServiceTeamCodeFrom": "Contract Service Team",
+            "IWSCommentDateTime": "Interactive Worksheet Date Stamp",
+            "AmsReferralTypeCode": "Referral Type",
+            "CAMHSServiceTier": "Associated CAMHS Service Tier",
+            "ePathwayID": "Associated ePathway",
+            "ReferringOrgType": "Referring organisation type",
+            "OutOfAreaReferralReason": "Out of Area referral reason",
+            "GenOverseasChargingCategory": "Clients Overseas Charging category "
+        },
+        "free_text_columns": [
+            "Referrer",
+            "ReferralComment",
+            "DischargeComment",
+            "IWSComment",
+            "ReferrerOther",
+            "DischargeAddressLine1",
+            "DischargeAddressLine2",
+            "DischargeAddressLine3",
+            "DischargeAddressLine4",
+            "DischargeAddressLine5",
+            "DischargePostCode"
+        ],
+        "other_identifiable_columns": [],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "ReferralActionDate",
+            "ReferralDateTime",
+            "DischargeDateTime",
+            "RemovalDateTime",
+            "ReferralReceivedDate",
+            "HcpAllocationDate",
+            "ReferralAcceptedDate",
+            "IWSHeld",
+            "IWSCommentDateTime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.AmsReferralSource": {
+        "table_description": "This table contains a list of possible sources of referral. ",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code of referral source",
+            "InternalReferral": "Used for reporting purposes",
+            "KC56_HospitalStaff": "Marks this referral source to count in the Hospital Staff section of the KC56 report (Obsolete field - retired report)",
+            "KC56_GP": "Marks this referral source to count in the GP section of the KC56 report (Obsolete field - retired report)",
+            "KC56_Other": "Marks this referral source to count in the Other section of the KC56 report (Obsolete field - retired report)",
+            "Behaviour": "Referral source behaviour Code",
+            "VerbalRequest": "Verbal request flag - Used for reporting purposes",
+            "MHCS_NationalCode": "MHSDS National code",
+            "NationalCode_CIDS": "CIDS Internal Code",
+            "DisplayOrganisationCode": "Referral Organisations field displayed on referral screen",
+            "DisplayStaffGroup": "Staff Professional Group field displayed on referral screen",
+            "UCNationalCode": "Urgent Care national code",
+            "OrgType": "Out of Area Referring organisation type for selection",
+            "OutOfAreaBehaviour": "Out of Area Behaviour field display option for referral screen"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsReferralSourceBehaviour": {
+        "table_description": "This table contains details of the fixed behaviour types for sources of referral.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "Description": "Description",
+            "TableName": "Name of table to search",
+            "Search": "Indicates that a search of some description is required for that behaviour type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsReferralType": {
+        "table_description": "",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Record description",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.AmsStream": {
+        "table_description": "This table holds the details of the stream.",
+        "columns_descriptions": {
+            "SequenceID": "Associated clinic template session",
+            "Stream": "Lookup value",
+            "Description": "Textual description of row",
+            "StreamSequenceID": "Unique identifier for the row",
+            "ReferralRequired": "Referral required for the stream",
+            "Closed": "Stream is closed"
+        },
+        "free_text_columns": [
+            "Description"
+        ],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanCarePathways": {
+        "table_description": "This table is used to store the codes of Care plan Care Pathways.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Record description",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanCommunityCareType": {
+        "table_description": "Care type",
+        "columns_descriptions": {
+            "Code": "Internal system code",
+            "CodeDescription": "Description",
+            "NationalCode": "National code of care type",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanIndex": {
+        "table_description": "This table contains the master index for a client care plan.",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "CarePlanID": "ID of care plan",
+            "StartDate": "Start Date of care plan",
+            "EndDate": "End Date of care plan",
+            "StartUserID": "User ID of user who started care plan",
+            "EndUserID": "User ID of user who ended care plan",
+            "EndReason": "Obsolete Field",
+            "CarePlanType": "Care plan Type Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "StartUserID",
+            "EndReason"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "StartDate",
+            "EndDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanInterventionCategory": {
+        "table_description": "This table contains the possible intervention categories of a Care plan intervention.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "CarePlanType": "Care plan Type Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanInterventionOutcomes": {
+        "table_description": "This table contains the possible outcomes of a Care plan intervention",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "CarePlanType": "Care plan Type Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanInterventions": {
+        "table_description": "This table records any Care plan interventions for a client.",
+        "columns_descriptions": {
+            "ProblemID": "Problem ID",
+            "InterventionID": "Intervention ID",
+            "StartDate": "Start date of intervention",
+            "EndDate": "End date of intervention",
+            "Box1": "Free Text box (configured form Title field within Care plan Box Config relating to Box 1 if used)",
+            "Box2": "Free Text box (configured form Title field within Care plan Box Config relating to Box 2 if used)",
+            "Box3": "Free Text box (configured form Title field within Care plan Box Config relating to Box 3 if used)",
+            "Box4": "Free Text box (configured form Title field within Care plan Box Config relating to Box 4 if used)",
+            "Box5": "Free Text box (configured form Title field within Care plan Box Config relating to Box 5 if used)",
+            "Box6": "Free Text box (configured form Title field within Care plan Box Config relating to Box 6 if used)",
+            "UserID": "User ID of User who saved intervention",
+            "EntryDate": "Date entry entered",
+            "OutCome": "Intervention outcome, chosen on Intervention close",
+            "InterventionType": "Intervention type Code, chosen from pick list",
+            "Comment": "Free Text Comment entered on close",
+            "Picklist1Code": "Code of item chosen for pick list",
+            "Picklist1Description": "Description of item chosen for pick list",
+            "Picklist2Code": "Code of item chosen for pick list",
+            "Picklist2Description": "Description of item chosen for pick list",
+            "Picklist3Code": "Code of item chosen for pick list",
+            "Picklist3Description": "Description of item chosen for pick list",
+            "DateField1": "Date entered in date field",
+            "DateField2": "Date entered in date field",
+            "LibraryID": "If entry was based upon a Library entry, the ID of Library entry",
+            "LibraryEdited": "Set to 1 if library entry was used and changed",
+            "SequenceID": "Sequence ID",
+            "InterventionCategory": "Intervention category",
+            "CheckBox1": "Value of the 1st checkbox",
+            "CheckBox2": "Value of the 2nd checkbox",
+            "CarePathway": "Associated Care pathway",
+            "IsRTT": "Intervention is linked to a RTT pathway"
+        },
+        "free_text_columns": [
+            "Box1",
+            "Box2",
+            "Box3",
+            "Box4",
+            "Box5",
+            "Box6",
+            "OutCome",
+            "Comment",
+            "Picklist1Description",
+            "Picklist2Description",
+            "Picklist3Description"
+        ],
+        "other_identifiable_columns": [
+            "UserID"
+        ],
+        "client_id": [],
+        "date_time": [
+            "StartDate",
+            "EndDate",
+            "EntryDate",
+            "DateField1",
+            "DateField2"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanInterventionTypes": {
+        "table_description": "This table contains a list of different types of interventions. ",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code of intervention type",
+            "CarePlanType": "Code of Care plan type",
+            "PrescribingLink": "Intervention is linked to prescribing"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanMentalHealthType": {
+        "table_description": "This table contains a list of possible Mental Health specific Care plan types.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanProblemCategory": {
+        "table_description": "This table details Care plan problem categories associated with a Care plan type",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description of category",
+            "Deleted": "Logically deleted flag",
+            "CarePlanType": "Main Care plan type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanProblemOrder": {
+        "table_description": "This table contains ordering information for Care plan problems. ",
+        "columns_descriptions": {
+            "CarePlanType": "Care plan type Code",
+            "ClientID": "The internal Rio identifier for this client",
+            "ProblemID": "Problem ID",
+            "OrderNum": "Used to order the problems on the screen"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanProblemOutcomes": {
+        "table_description": "This table contains a list of possible outcomes for a Care plan problem.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "CarePlanType": "Code of Care plan type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanProblems": {
+        "table_description": "This table contains details of all Care plan problems associated with a client.",
+        "columns_descriptions": {
+            "ProblemID": "ID of this problem",
+            "CarePlanID": "Care plan ID of the Care plan this problem belongs to",
+            "Text": "Free Text comment",
+            "StartDate": "Start date of problem",
+            "EndDate": "End date of problem",
+            "UserID": "User ID of user who entered problem",
+            "EntryDate": "Date of entry",
+            "ProblemType": "Problem type code, from pick list",
+            "OutCome": "Outcome Code of outcome entered on problem close",
+            "Comment": "Free Text comment entered on problem close",
+            "LibraryID": "If entry was based upon a Library entry, the ID of Library entry",
+            "LibraryEdited": "Set to 1 if library entry was used and changed",
+            "SequenceID": "Unique Sequence ID",
+            "ProblemCategory": "Care plan problem category",
+            "ProblemDate": "Care plan clinical date",
+            "CarePathway": "Care pathway",
+            "IsRTT": "Care plan problem is and RTT associated problem"
+        },
+        "free_text_columns": [
+            "Text",
+            "Comment"
+        ],
+        "other_identifiable_columns": [
+            "UserID"
+        ],
+        "client_id": [],
+        "date_time": [
+            "StartDate",
+            "EndDate",
+            "EntryDate",
+            "ProblemDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanProblemTypes": {
+        "table_description": "This table contains a list of all possible problem types. ",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "CarePlanType": "Code of Care plan type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanProblemValidation": {
+        "table_description": "This table details Care plan validation status for problems.",
+        "columns_descriptions": {
+            "SequenceID": "Unique Sequence ID",
+            "ProblemID": "Care plan Problem ID",
+            "ValidationStatus": "Current Validation status\n1 = validated",
+            "ProblemSequenceID": "Care plan Sequence",
+            "InterventionSequenceID": "Care plan Intervention Sequence",
+            "Action": "Care plan action",
+            "ShowIcon": "Set to 1 to show validated icon"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CarePlanType": {
+        "table_description": "This table contains a list of possible Care plan types",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "LetterCode": "Editable letter type associated with this type of care plan. Chosen from pick list. Used for Printable care plan.",
+            "ProblemCategoryLabel": "Label for the Care plan category field",
+            "ProblemTypeLabel": "Label for the Care plan problem type field",
+            "InterventionCategoryLabel": "Label for the intervention category field",
+            "InterventionTypeLabel": "Label for the intervention problem type field",
+            "CheckBox1Display": "Display 1st Checkbox",
+            "CheckBox2Display": "Display 2nd Checkbox",
+            "CheckBox1Label": "Label for the 1st Checkbox",
+            "CheckBox2Label": "Label for the 2nd Checkbox",
+            "PickList3SQLID": "Select list ID for the 3rd Pick list",
+            "PickList3Label": "Label for the 3rd Pick list",
+            "EnableValidation": "Set to 1 to enable Care plan validation",
+            "MandatoryOption": "Mandatory options available: Values are\n(1) - Problem Description mandatory\n(2) - The following must be mandatory\n(2.a) Problem Category\n(2.b) Problem Type\n(2.c) Intervention Category\n(2.d) Intervention Type\n(3) - All fields mandatory\n(4) - One of\n(4.a) Problem Category\n(4.b) Problem Type\n(4.c) Problem Description is mandatory\n(4.c.i) And One of\n(4.d) Intervention Category\n(4.e) Intervention Type\n(4.f) Intervention Input Fields is mandatory",
+            "GenCPProbLabel": "General Care plan problem label",
+            "GenCPIntLabel": "General Care plan intervention label",
+            "ValidationMessage": "Free text validation comment",
+            "ProblemDateDisplay": "Display Problem date",
+            "ProblemDateLabel": "Problem date label",
+            "ProblemDateMand": "Problem date mandatory",
+            "ProblemDateDefault": "Problem date default to current date",
+            "CarerCarePlan": "Care plan is a carers care plan",
+            "MentalHealthType": "Care plan Mental Health category",
+            "CommunityCareType": "Community care type (not used)"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ClientAlert": {
+        "table_description": "This table holds any alerts that has been recorded against a client",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "SequenceID": "Unique identifier for the row",
+            "AlertType": "The type of this alert",
+            "Comment": "A comment recorded against the alert",
+            "AlertDate": "The date the alert was first noted",
+            "SubmitDate": "The date the alert was recorded on Rio",
+            "Deleted": "Logically deleted flag",
+            "AlertPriority": "The priority of the alert",
+            "EnteredBy": "User alert was entered by",
+            "NextReviewDate": "Date when the alert is needed to be re-reviewed",
+            "RemovalDate": "Date that the alert is no longer applicable",
+            "RemovalReason": "Removal reason for the alert",
+            "RemovalComment": "General comment for the removal",
+            "RemovalSystemDate": "The system time stamp of the removal",
+            "RemovalUserID": "The Rio user who removed the alert",
+            "Significant": "Clients alert is a significant alert - for use in the significant events screen"
+        },
+        "free_text_columns": [
+            "Comment",
+            "RemovalComment"
+        ],
+        "other_identifiable_columns": [
+            "EnteredBy",
+            "RemovalUserID"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "AlertDate",
+            "SubmitDate",
+            "NextReviewDate",
+            "RemovalDate",
+            "RemovalSystemDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ClientAliasType": {
+        "table_description": "This table contains a list of possible types of Alias for a client.",
+        "columns_descriptions": {
+            "Code": "Unique identifier for Alias Type",
+            "CodeDescription": "Description of Alias Type",
+            "Deleted": "Logically deleted flag",
+            "SpineCode": "Spine Code",
+            "SpineDefault": "Indicates that the alias type is a spine alias",
+            "AllowMultiple": "Flag to allow multiple current entries of alias"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ClientDocument": {
+        "table_description": "This table contains information about documents that have been uploaded against a client record.",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "UserID": "The identifier of the user storing the document",
+            "Type": "The type of the document ",
+            "DateCreated": "The date the document was stored",
+            "SerialNumber": "A rolling counter used to identify the document",
+            "Path": "The filename of the document",
+            "Description": "The description of the document entered by the user",
+            "Title": "The title of the document",
+            "Author": "The author of the document",
+            "SequenceID": "Unique identifier for the row",
+            "DocumentDate": "Document Date as entered in the interface",
+            "InsertedDate": "Inserted Date stamp",
+            "RevisionID": "Document version",
+            "FinalRevFlag": "Flag to indicate the current version is the final version",
+            "DeletedDate": "Date the document was logically Deleted",
+            "DeletedBy": "Rio User who Deleted the document",
+            "DeletedReason": "Reason for deletion",
+            "FileSize": "Physical size of the file",
+            "SendToGP": "Document sent to clients GP"
+        },
+        "free_text_columns": [
+            "Description",
+            "Title"
+        ],
+        "other_identifiable_columns": [
+            "UserID",
+            "Path",
+            "Author"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "DateCreated",
+            "DocumentDate",
+            "InsertedDate",
+            "DeletedDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ClientDocumentAdditionalClient": {
+        "table_description": "This table store details of additional shared documents for a client.",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "DocumentID": "The identifier of the Associated document "
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ClientHealthCareProvider": {
+        "table_description": "This table contains values of Health Care Providers associated with clients. This table supersedes ClientGP. For historical purposes, a SQL view called ClientGP is still available for use.",
+        "columns_descriptions": {
+            "ClientID": "Unique identifier for client",
+            "GPCode": "Code of Clients GP",
+            "PracticeCode": "Code for GP Practice",
+            "FromDate": "Health Care provider from date",
+            "ToDate": "Health Care provider to date",
+            "Allocation": "Allocation of Provider",
+            "PersonHCPProviderID": "Provider ID",
+            "LastUpdated": "Date stamp of last update to the record",
+            "HCProviderTypeID": "Default Value of (1)",
+            "HCProviderID": "Health Care Provider Code",
+            "SpineID": "Spine interaction field"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "FromDate",
+            "ToDate",
+            "LastUpdated"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ClientIndex": {
+        "table_description": "The main client detail table, as used from RiO5 onwards. In versions prior to RiO5 this was the Client table.",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "ClientID": "Unique Rio identifier for client",
+            "NNN": "National NHS Number",
+            "NNNStatus": "National NHS Number Status obtained",
+            "AlternativeID": "Client Alternative ID",
+            "Surname": "Client Surname (obsolete field)",
+            "SurnameSoundex": "Client Surname Soundex (obsolete field)",
+            "Firstname": "Client Firstname (obsolete field)",
+            "FirstnameSoundex": "Client Firstname Soundex (obsolete field)",
+            "Title": "Client Title (obsolete field)",
+            "Gender": "Gender",
+            "DateOfBirth": "Date Of Birth",
+            "EstimatedDOB": "Flag that indicates if DOB is estimated",
+            "DaytimePhone": "Daytime Phone (obsolete field)",
+            "EveningPhone": "Evening Phone (obsolete field)",
+            "Occupation": "Client Occupation",
+            "PartnerOccupation": "Client partners occupation",
+            "MaritalStatus": "Marital status Code",
+            "Ethnicity": "Ethnicity Code",
+            "Religion": "Religion Code",
+            "Nationality": "Nationality Code",
+            "DateOfDeath": "Date Of Death",
+            "OtherAddress": "Clients other address (obsolete field",
+            "MotherLink": "Link to Mothers Clinical Portal",
+            "FatherLink": "Link to fathers Clinical Portal",
+            "DateRegistered": "Date client registered",
+            "EMailAddress": "Clients E Mail Address (obsolete field)",
+            "MobilePhone": "Clients Mobile Phone number (obsolete field)",
+            "FirstLanguage": "Clients First Language",
+            "School": "Clients school if child (obsolete field)",
+            "NonClient": "Indicator to show if client or other",
+            "DiedInHospital": "Set to 1 if client died in hospital",
+            "MainCarer": "Client's main carer",
+            "NINumber": "Clients National Insurance Number",
+            "DeathFlag": "Set to 1 for client death",
+            "TimeStamps": "Used internally by Rio to control concurrent record access",
+            "FirstCareDate": "Clients first care date",
+            "NNNLastTape": "NNN Last Tape",
+            "OtherCarer": "Clients other carer",
+            "LastUpdated": "Date last updated",
+            "ReportsFile": "Reports file flag",
+            "SENFile": "SEN file flag",
+            "Interpreter": "If interpreter requires set to 1",
+            "OutPatMedAdminRecord": "Set to 1 if there is an outpatient medical admin record",
+            "SpineID": "Spine ID",
+            "SpineSyncDate": "Spine interaction field",
+            "SensitiveFlag": "Is information sensitive",
+            "DeathDateNational": "Spine Death date",
+            "DeathDateStatus": "Spine Death date status",
+            "SupersedingNNN": "NNN that supersedes the current recorded NNN. Used as part of PDS",
+            "Deleted": "Logically deleted flag\n0 - Undeleted\n1 - Deleted by Rio\n2 - Deleted by PDS",
+            "PersonRole": "Clients Role within Rio",
+            "Exited": "PDS Exit Posting Flag, to advise that the Client has left NHS care",
+            "ExcludeFromSearch": "Hide client form Rio search",
+            "MainCarerRelationship": "Main carers relationship to client",
+            "CountryOfBirth": "Country Of Birth",
+            "GPOptOutReason": "GP Opt Out Reason",
+            "TownOfBirth": "Town Of Birth"
+        },
+        "free_text_columns": [
+            "Occupation",
+            "School"
+        ],
+        "other_identifiable_columns": [
+            "NNN",
+            "NNNStatus",
+            "AlternativeID",
+            "Surname",
+            "SurnameSoundex",
+            "Firstname",
+            "FirstnameSoundex",
+            "Title",
+            "DaytimePhone",
+            "EveningPhone",
+            "MotherLink",
+            "FatherLink",
+            "EMailAddress",
+            "MobilePhone",
+            "MobilePhone",
+            "MainCarer",
+            "NINumber",
+            "NNNLastTape",
+            "OtherCarer",
+            "SpineID",
+            "SupersedingNNN"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "DateRegistered",
+            "FirstCareDate",
+            "LastUpdated",
+            "SpineSyncDate",
+            "DeathDateNational"
+        ],
+        "date_of_birth": [
+            "DateOfBirth",
+            "DateOfDeath"
+        ]
+    },
+    "dbo.ClientIndex_LSOA11": {
+        "table_description": "Details about clients (patients) postcode and Lower Super Output Area version 11 (LSOA11)",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "ClientID": "Unique Rio identifier for client",
+            "ResidentPostcode": "Postcode of the address where client (patient) lives",
+            "LSOA11": "Lower Super Output Area version 11 (LSOA11) of the address where client (patient) lives"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "ResidentPostcode"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ClientMedications": {
+        "table_description": "Information about medication prescribed to client.",
+        "columns_descriptions": {
+            "ptsupply": "Flag for patient supply",
+            "ClientID": "Unique identifier for client",
+            "route2": "Route prescribed (how the medication is used, like Oral, Inhaled, etc.)",
+            "dispensed": "Date and time when dispensed",
+            "frequency2": "How frequently the medication is taken.",
+            "PresBy": "Name of person who prescribed the medication.",
+            "Dose": "Dose for medication (like '50 mg')",
+            "dateofdx": "Date of differential diagnosis for medication.",
+            "AssessmentDate": "Assessment date for medication.",
+            "Form1": "What is the form of medication (like tablets, capsules, disperse, etc.)",
+            "drug": "Name of the drug (medication).",
+            "gptocon2": "GP to consultation",
+            "days": "Number of days.",
+            "dmcode": "DM code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "PresBy"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "dispensed",
+            "dateofdx",
+            "AssessmentDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ClientName": {
+        "table_description": "This table contains details of all names associated with a Client.",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "Surname": "Client Surname",
+            "ClientNameID": "Unique Client Name ID",
+            "EffectiveDate": "Date effective from",
+            "Deleted": "Logically deleted flag",
+            "AliasType": "Alias type Code",
+            "EndDate": "End Date",
+            "SpineID": "Spine ID",
+            "Prefix": "Prefix (like Mr., Miss., Dr., etc.)",
+            "Suffix": "Suffix (not in use)",
+            "GivenName1": "Given Name",
+            "GivenName2": "Given Name",
+            "GivenName3": "Given Name",
+            "GivenName4": "Given Name",
+            "GivenName5": "Given Name",
+            "GivenName1Soundex": "Given Name Soundex",
+            "GivenName2Soundex": "Given Name Soundex",
+            "GivenName3Soundex": "Given Name Soundex",
+            "GivenName4Soundex": "Given Name Soundex",
+            "GivenName5Soundex": "Given Name Soundex",
+            "SurnameSoundex": "Surname Soundex value"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "Surname",
+            "ClientNameID",
+            "SpineID",
+            "Prefix",
+            "Suffix",
+            "GivenName1",
+            "GivenName2",
+            "GivenName3",
+            "GivenName4",
+            "GivenName5",
+            "GivenName1Soundex",
+            "GivenName2Soundex",
+            "GivenName3Soundex",
+            "GivenName4Soundex",
+            "GivenName5Soundex",
+            "SurnameSoundex"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "EffectiveDate",
+            "EndDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.CPAClientCPA": {
+        "table_description": "This table stores the details of a CPA episode including any changes in CPA level (and who made the changes).",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "ClientID": "The internal Rio identifier for this client",
+            "StartDate": "Date CPA Started",
+            "EndDate": "Date CPA Ended",
+            "ChangedBy": "Internal Rio identifier for who made the change",
+            "EndReason": "Reason for ending",
+            "NextReviewDate": "Date of next review",
+            "CPALevel": "Internal Rio identifier for the level of CPA"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "StartDate",
+            "EndDate",
+            "NextReviewDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.CPALevel": {
+        "table_description": "This table contains a list of all possible CPA levels.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National CPA Code",
+            "AllowCareSpellClosureWithoutReview": "Care Spell Closure Without Review flag",
+            "HideProvisionalNextReviewDate": "Provisional Next Review Date flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.CPAReviewOutcomes": {
+        "table_description": "This table contains a list of possible review outcomes.",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National CPA Code",
+            "DischargeFromCPA": "Discharge flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.DemMainCarerRelationship": {
+        "table_description": "This lists an expanded range of possible main carer relationship values in Rio.",
+        "columns_descriptions": {
+            "Code": "Unique identifier for the row",
+            "CodeDescription": "Description of relationship.",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code for the record value"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.DiagnosisClient": {
+        "table_description": "This table contains diagnosis information about an individual diagnosis for a client.",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "ClientID": "The internal Rio identifier for this clien",
+            "CodingScheme": "Coding scheme that 'Diagnosis' is from",
+            "Diagnosis": "Diagnosis Code",
+            "DiagnosisStartDate": "Date diagnosis made on client",
+            "DiagnosisEndDate": "Date diagnosis ended for client",
+            "EntryDate": "Date/time diagnosis was entered",
+            "EntryBy": "Rio User ID that entered the diagnosis",
+            "RemovalDate": "Date/time diagnosis removed",
+            "RemovalBy": "Rio User ID that removed the diagnosis",
+            "RemovalReason": "Reason for removing the diagnosis",
+            "RemovalComment": "Free Text optional comment",
+            "Comment": "Free Text comment",
+            "ConditionOnsetDate": "Date of condition onset",
+            "FetalDiagnosis": "Pre birth diagnosis"
+        },
+        "free_text_columns": [
+            "Comment",
+            "RemovalComment"
+        ],
+        "other_identifiable_columns": [
+            "EntryBy",
+            "RemovalBy"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "DiagnosisStartDate",
+            "DiagnosisEndDate",
+            "EntryDate",
+            "RemovalDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.DiagnosisCode": {
+        "table_description": "This table contains a list of all possible diagnoses. Each diagnosis is associated with a particular diagnosis coding scheme.",
+        "columns_descriptions": {
+            "Code": "Diagnosis Code",
+            "CodingScheme": "Coding scheme that the Code belongs to",
+            "CodeDescription": "Description of the diagnosis",
+            "NationalCode": "The National code for the diagnosis",
+            "Deleted": "Logically deleted flag",
+            "HRG": "Associated Diagnosis Healthcare Resource Code value."
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.DiagnosisRemovalReason": {
+        "table_description": "This table contains a list of all possible reasons that a diagnosis/procedure record may be removed from a client's record.",
+        "columns_descriptions": {
+            "Code": "Removal reason Code",
+            "CodeDescription": "Description of the removal reason",
+            "Deleted": "Logically deleted flag",
+            "IsProcedural": "Removal reason is intended for procedural item",
+            "IsDiagnosis": "Removal reason is intended for diagnosis item"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.EPathwayClient": {
+        "table_description": "The table refers to online sources (NICE Pathways) for a particular client's diagnosis (typically to a source with a description of what to do after the first psychosis episode). Probably a useless table.",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "ClientID": "Unique identifier for client",
+            "TemplateId": "Template ID",
+            "Version": "Version",
+            "Name": "Name",
+            "Description": "Description",
+            "HelpUrl": "Link to websites with help",
+            "Owner": "(Who owns this row) Not in use",
+            "Type": "Type of EPathway",
+            "ExpectedDuration": "Link to expected duration.",
+            "CostEstimate": "Cost estimate",
+            "Active": "Is it active?",
+            "Status": "One of:\nOverdue\nNot started\nDue\nCompleted",
+            "Modified": "Flag for modification",
+            "SavedDate": "When it was saved",
+            "StartDate": "When it was created",
+            "EndComment": "Comment in the end (not in use)",
+            "ParentSequenceId": "Link to parent ID of the row",
+            "UpdatedBy": "UserID of person who updated last",
+            "Deleted": "Logically deleted flag",
+            "CloseReason": "Why this entry was closed",
+            "TransferredFrom": "Where it was transferred from (not in use)"
+        },
+        "free_text_columns": [
+            "EndComment"
+        ],
+        "other_identifiable_columns": [
+            "Owner",
+            "UpdatedBy"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "SavedDate",
+            "StartDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ePathwayCloseReason": {
+        "table_description": "Catalog of reasons for closing ePathway (NICE Pathways)",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Record description",
+            "IsTransfer": "Flag for defining transfers",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.EPathwayStatus": {
+        "table_description": "Status definition for ePathway (NICE Pathways)",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Record description",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.EPathwayTemplate": {
+        "table_description": "Template for ePathway (NICE Pathways)",
+        "columns_descriptions": {
+            "SequenceID": "Sequence ID",
+            "Id": "ID of ePathway entity",
+            "Version": "Version",
+            "Name": "Name",
+            "Description": "Description",
+            "HelpUrl": "Link to websites with help",
+            "Owner": "(Who owns this row) Not in use",
+            "Type": "Type of EPathway",
+            "ExpectedDuration": "Link to expected duration.",
+            "CostEstimate": "Cost estimate",
+            "Active": "Is it active?",
+            "SavedDate": "When it was saved?",
+            "Deleted": "Logically deleted flag",
+            "EndDate": "End Date"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "SavedDate",
+            "EndDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.EPathwayType": {
+        "table_description": "EPathway type (NICE Pathways)",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.EPClientAllergies": {
+        "table_description": "This table contains details of any allergies to prescribed medication.",
+        "columns_descriptions": {
+            "ReactionID": "Unique identifier for the row",
+            "UserID": "Rio User who entered Allergy",
+            "Substance": "Substance/item client is allergic to",
+            "ReactionType": "Look up value for reaction type ",
+            "Reaction": "Description of reaction",
+            "ReactionSeverity": "Look up value for reaction severity",
+            "ReportedBy": "Rio User who Reported the allergy",
+            "Name": "Name",
+            "WitnessingHCP": "HCP who verified reaction (Text)",
+            "YearOfIdentification": "Year reaction identified ",
+            "Comment": "Free text comment",
+            "ClientID": "Unique identifier for client",
+            "Deleted": "Logically deleted flag",
+            "DeletionReason": "Look up value for Deleted reason",
+            "DeletedBy": "Rio User who Deleted the item",
+            "RemovalDate": "Date allergy removed",
+            "Certainty": "Certainty of allergy",
+            "Evidence": "Free text comment"
+        },
+        "free_text_columns": [
+            "Reaction",
+            "Comment",
+            "Evidence"
+        ],
+        "other_identifiable_columns": [
+            "UserID",
+            "ReportedBy",
+            "Name",
+            "WitnessingHCP",
+            "DeletedBy"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "RemovalDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.EPReactionType": {
+        "table_description": "Table lists the reaction types for the allergy screen.",
+        "columns_descriptions": {
+            "ReactionID": "Unique identifier for the row",
+            "CodeDescription": "Textual description of row",
+            "SNOMEDCTID": "SNOMED Concept ID (medical code)",
+            "Deleted": "Logically deleted flag",
+            "Code": "Lookup value"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.EPSeverity": {
+        "table_description": "This table lists the possible severities of an allergy.",
+        "columns_descriptions": {
+            "SeverityID": "Unique identifier",
+            "CodeDescription": "Record description",
+            "SNOMEDCTID": "SNOMED Concept ID (medical code)",
+            "Deleted": "Logically deleted flag",
+            "Code": "Lookup value"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenActivity": {
+        "table_description": "This table holds the valid values for activities that may be recorded against an appointment.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "FamilyPlanningContID": "Link to the Family Planning Contraceptive table for reporting. (Obsolete field)",
+            "ActivityOPCS4": "Nation Code for the condition requiring invasive intervention.",
+            "Sensitive": "Marks as sensitive in client diary, if set restricts viewing to authorised users.",
+            "OPCS4Code": "Nation Code for invasive procedure.",
+            "SNOMEDSearch": "SNOMED Search text",
+            "IAPT_TherapyType": "IAPT Therapy Code",
+            "NationalCode_CIDS": "CSDS National code",
+            "NationalCode_MHLDDS": "MHSDS National code",
+            "SNOMEDCTID": "SNOMED Concept ID (medical code)"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenAddressType": {
+        "table_description": "This table holds the valid values for types of address that may be recorded for a client",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "AllowMultiple": "Indicates that more than 1 current address of this type may be stored against a client.",
+            "SpineCode": "Spine interaction field",
+            "SpineDefault": "The record is the spine default if multiple records have the same spine code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenAdministrativeCategory": {
+        "table_description": "This table holds the valid values for administrative categories that may be recorded for a client event.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "IMSOnly": "If set (1) indicates this value is for inpatient use only",
+            "NationalCode": "The National code for this administrative category",
+            "OverseasInfoFlag": "Record is classed as an Overseas visitor"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenAgeGroup": {
+        "table_description": "This table holds the valid values for age groups used on the system",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this age group"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenAlertPriority": {
+        "table_description": "This table contains all priorities available when setting alerts",
+        "columns_descriptions": {
+            "Code": "Internal Rio identifier",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenAlertType": {
+        "table_description": "This table holds the valid values for types of alert that may be recorded for clients.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "isSEN": "If set (1) indicates that this Code denotes that the alert is a special educational need",
+            "SNOMEDSearch": "SNOMED Search text",
+            "SNOMEDCTID": "SNOMED Concept ID",
+            "ImagePath": "File path for alert image (not in use)"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "ImagePath"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenBookedAppointment": {
+        "table_description": "This table details options for booking appointments.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this booked appointment"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenBroadPatientGroup": {
+        "table_description": "This table holds the valid values for Broad Patient Group that may be recorded on the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The national code for the Broad Patient Group",
+            "CAMHSNationalCode": "The National code for CAMHS"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenCAMHSServiceTier": {
+        "table_description": "This table holds the valid values for CAMHS Service Tier that may be recorded on the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The national code for the record"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenCAMHSTeamType": {
+        "table_description": "This table holds the national care Cluster list for PBR clustering",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code for the record"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenCancellationReason": {
+        "table_description": "This table holds the valid values for Cancellation Reasons that may be recorded against appointments",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "CDSCode": "The CDS Code equivalent of this Code",
+            "CancelledByClient": "If set (1) indicates that the appoint cancellation was initiated by the client",
+            "SpineCode": "Spine interaction field",
+            "SpineDefaultFlag": "Flag to indicate this record is a default for a specific Spine Code",
+            "CPA": "Use as CPA Cancellation reason",
+            "NationalCode_CIDS": "CSDS National code",
+            "AllowRebooking": "Allow appointment rebook flag",
+            "ReferralDischarge": "Discharge the associated referral flag",
+            "ClinicalReason": "Discharge reason is a clinically based reason"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenCertainty": {
+        "table_description": "This table lists all the possible classification of an allergy diagnosis",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "SNOMEDCTID": "Associated SNOMED ID",
+            "Deleted": "Logically deleted flag",
+            "SortOrder": "Screen display order value"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenChdBirthHospital": {
+        "table_description": "This table stores master file values for the Hospital of Birth field on the Birth Details screen",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "LabCode": "NBBS associated lab code",
+            "AddressLine1": "Hospital address line 1",
+            "AddressLine2": "Hospital address line 2",
+            "AddressLine3": "Hospital address line 3",
+            "AddressLine4": "Hospital address line 4",
+            "PostCode": "Hospital post code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenChdScreenTestLaboratory": {
+        "table_description": "This table contains information about Laboratories used by a trust for Blood spot screening",
+        "columns_descriptions": {
+            "Code": "Laboratory code",
+            "CodeDescription": "Laboratory desciption",
+            "PIDCode": "Laboratory code - PID",
+            "OBXCode": "Laboratory code - OBX",
+            "Application": "Application name",
+            "OtherSystemID": "Other system ID",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenChildFieldBehaviour": {
+        "table_description": "This table is used to indicate the mandatory/display nature of the certain child health fields",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenClinicalCareIntensity": {
+        "table_description": "This table holds the valid values for clinical care intensity codes.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The national value for this clinical care intensity Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenClinicReschedReason": {
+        "table_description": "This table lists possible values for Clinic rescheduling.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenCountry": {
+        "table_description": "This table contains all countries available for use in demographics.",
+        "columns_descriptions": {
+            "Code": "Code of country (RIO)",
+            "CodeDescription": "Name of country",
+            "Iso3166Code2": "ISO code for country",
+            "Iso3166Code3": "ISO code for country"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenDischargeReason": {
+        "table_description": "This table holds the valid values for reasons for discharge from care that may be recorded for a client.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this discharge reason",
+            "UseAddress": "Set to 1 to enter allow discharge address entered",
+            "UseForAdmission": "Set to 1 use the discharge address for Admission purposes",
+            "SNOMEDSearch": "SNOMED Search text",
+            "SNOMEDCTID": "SNOMED Concept ID",
+            "MHCS_NationalCode": "MHSDS National code",
+            "MHMDS_REFSTATUS": "MHSDS Referral Status Code",
+            "IsRejection": "Outcome is a referral rejection outcome",
+            "NationalCode_CIDS": "CIDS Internal Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenDocumentRemovalReason": {
+        "table_description": "This table holds the removal reasons for uploaded documents in Rio",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "Default": "Default pick list value flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenDocumentType": {
+        "table_description": "This table holds the valid values for types of document that may be recorded for a client.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "SendToClientGPEnabled": "Document eligible to be sent to GP",
+            "MaximumDownloadCount": "Maximum number of documents of this type to download by Store and Forward",
+            "DocumentSelectionWindow": "The number of days in the past the system will check for documents for docwlaoding to Store and Forward"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenEthnicity": {
+        "table_description": "This table holds the valid values for ethnicity that may be recorded for a client.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Description of ethnicity",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this ethnicity",
+            "SortOrder": "Sort order for the demographics screen Pick list"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenGender": {
+        "table_description": "This table lists available Genders for use within the Rio functionality.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "SpineCode": "Spine interaction Code",
+            "CAMHSNationalCode": "CAMHS National Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenGP": {
+        "table_description": "This table contains the details of all registered GPs",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this GP",
+            "Surname": "The GP's surname",
+            "Forename": "The GP's first name",
+            "Title": "The GP's title",
+            "EMailAddress": "The GP's email",
+            "DOHCode": "The GP's Department of Health Code",
+            "HAACode": "The GP's HAA Code",
+            "TelephoneNumber": "The GP's telephone number",
+            "LastUpdated": "The date the record was last updated",
+            "StartDate": "The date from which this record became valid for use",
+            "EndDate": "The date from which this record became invalid for use",
+            "SequenceID": "Unique Sequence ID "
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "TelephoneNumber",
+            "EMailAddress",
+            "Title",
+            "Forename",
+            "Surname"
+        ],
+        "client_id": [],
+        "date_time": [
+            "LastUpdated",
+            "StartDate",
+            "EndDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.GenGPOptOutReason": {
+        "table_description": "This table stores the link between GPs and their practice(s)",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption of situation",
+            "Deleted": "Logically deleted flag",
+            "SortOrder": "Sort order",
+            "SNOMEDCTID": "Snomed code for situation"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenGPPractice": {
+        "table_description": "This table contains details of all registered GP practices. ",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "AddressLine1": "Address line for the practice",
+            "AddressLine2": "Address line for the practice",
+            "AddressLine3": "Address line for the practice",
+            "AddressLine4": "Address line for the practice",
+            "AddressLine5": "Address line for the practice",
+            "PostCode": "Post code of the practice",
+            "PhoneNumber": "Main phone number of the practice",
+            "FaxNumber": "Fax number for the practice",
+            "EMailAddress": "Main email address of the practice",
+            "PCG": "Obsolete Field - superseded by GenGPPracticePCTHistory",
+            "NationalCode": "Nation Practice Code",
+            "HealthAuthority": "Obsolete Field",
+            "CanImmunise": "Set to 1 if the practice carried out child immunisations",
+            "ImmunisationCentreNo": "Immunisation centre number if practice can immunise",
+            "CanScheduleCombinedItems": "Location can schedule combined items",
+            "EDICode": "NHS EDI Code (Electronic Data Interchange)"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "PhoneNumber",
+            "FaxNumber",
+            "EMailAddress",
+            "EMailAddress"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenHCP": {
+        "table_description": "This table contains about all HCP's registered in Rio. HCP's personal details (name, address etc.) are stored in GenPerson.",
+        "columns_descriptions": {
+            "GenHCPCode": "Internal HCP Code",
+            "CareCoordinatorFlag": "If set (1) indicates that this HCP is a care coordinator",
+            "ConsultantFlag": "If set (1) indicates that this HCP is a consultant",
+            "SocialWorkerFlag": "If set (1) indicates that this HCP is a social worker",
+            "HCPFlag": "If set (1) indicates that this HCP is a HCP",
+            "ManagerFlag": "If set (1) indicates that this HCP is a manager",
+            "DiagnoseFlag": "If set (1) indicates that this HCP is able to record diagnoses on Rio",
+            "Section12Flag": "If set (1) indicates that this HCP is valid for classification as a Responsible clinician for the Mental Health act",
+            "Location": "The main location where the HCP works",
+            "MainGenSpecialtyCode": "The main specialty of the HCP (obsolete field)",
+            "Deleted": "Logically deleted flag",
+            "StaffProfessionalGroup": "The staff professional group of the HCP",
+            "NationalCode": "The National code of the HCP",
+            "NamedNurseFlag": "If set (1) indicates that this HCP is a named nurse",
+            "SOADFlag": "If set (1) indicates that this HCP is a second opinion approved doctor in the Mental Health module",
+            "PrescribingCode": "The Prescribing Code of this HCP (obsolete field)",
+            "PrimaryTeam": "Primary Team",
+            "ApprovedClinician": "The HCP is an approved clinician for Mental Health",
+            "RCProfession": "Responsible Clinician type",
+            "SequenceID": "Unique Sequence ID ",
+            "PrescriberPIN": "HCPs Prescriber PIN code",
+            "ESRJobRole": "ESR Job role for the HCP",
+            "AnaesthetistFlag": "HCP is an Anaesthetist",
+            "StaffProfessionalGroupStartDate": "Start date of the HCPS current staff professional group",
+            "OCCanTakeSamples": "HCP authorise to take samples",
+            "StaffProfessionalGroupEndDate": "End date of the HCPS current staff professional group",
+            "AllowCountersigning": "HCP can countersign medication",
+            "ProfessionalTier": "Professional Tier",
+            "NationalCodeIssuer": "National code issuer",
+            "CalendarFeedEnabled": "HCP allows iCal link",
+            "CalendarToken": "iCal link token"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "StaffProfessionalGroupStartDate",
+            "StaffProfessionalGroupEndDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.GenHCPNationalCodeIssuer": {
+        "table_description": "This table contains the medical council responsible for the HCP's national registration code.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National Code",
+            "SortOrder": "Screen display order"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenHCPProfessionalTier": {
+        "table_description": "This table contains the professional tier level for the HCP's.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National Code",
+            "SortOrder": "Screen display order",
+            "FullDescription": "Long description of record"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenHospitalConsultant": {
+        "table_description": "This table holds National Consultant information, valid for use within the system.",
+        "columns_descriptions": {
+            "ConsultantID": "The internal Rio identifier for the consultant",
+            "Surname": "The consultant's surname",
+            "Firstname": "The consultant's first name",
+            "Gender": "The consultant's Gender",
+            "CurrentLocationID": "The consultant's work location",
+            "SpecialtyID": "The consultant's specialty"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "Surname",
+            "Firstname"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenHospitalSite": {
+        "table_description": "This table holds hospital site information, valid for use within the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for the hospital site",
+            "ResidentialCareUnit": "If set (1) indicates this is a residential care unit",
+            "AddressLine1": "Line of the address of the hospital site",
+            "AddressLine2": "Line of the address of the hospital site",
+            "AddressLine3": "Line of the address of the hospital site",
+            "AddressLine4": "Line of the address of the hospital site",
+            "AddressLine5": "Line of the address of the hospital site",
+            "Postcode": "Postcode of the hospital site",
+            "TelephoneNumber": "Telephone number of the hospital site",
+            "LocationType": "Location of site"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "TelephoneNumber"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenLanguage": {
+        "table_description": "This table holds the valid values for language codes for use in the system",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this language",
+            "SpineCode": "National spine code",
+            "SNOMEDCode": "Associated SNOMED Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenLocation": {
+        "table_description": "This table holds the valid values for location codes for use in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this location",
+            "LocationType": "The type of this location",
+            "UseInDiary": "If set (1) indicates that this location is valid for use in diaries",
+            "AdHoc": "If set (1) indicates that this location will accept adhoc appointments",
+            "AddressLine1": "Line of the location address",
+            "AddressLine2": "Line of the location address",
+            "AddressLine3": "Line of the location address",
+            "AddressLine4": "Line of the location address",
+            "AddressLine5": "Line of the location address",
+            "Postcode": "Postcode of the location address",
+            "TelephoneNumber": "Telephone number of the location",
+            "Fax": "Fax number of the location",
+            "Email": "Email address of the location",
+            "IsPlaceOfSafety": "Place of safety indicator"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "TelephoneNumber",
+            "Fax",
+            "Email"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenLocationType": {
+        "table_description": "This table holds the valid values for location type codes for use in the system",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Description",
+            "NationalCode": "The National code for this location type",
+            "Deleted": "Logically deleted flag",
+            "NationalCode_CIDS": "CIDS Internal Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenMaritalStatus": {
+        "table_description": "This table holds the valid values for marital status codes for use in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this marital status",
+            "CDSCode": "CDS Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenNationality": {
+        "table_description": "This table holds the valid values for nationality codes for use in the system.",
+        "columns_descriptions": {
+            "Code": "Nationality code",
+            "CodeDescription": "Nationality definition",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The ISO 3166-2 Code for this nationality",
+            "Alpha3": "The ISO 3166-1 Alpha 3 Code for this nationality"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenOutOfAreaReferralReason": {
+        "table_description": "The list of available client's out of area of area referrals reasons.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenOverseasChargingCategory": {
+        "table_description": "The list of available client's Charging categories for their oversea visitor status for associating with referrals and inpatients.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Description",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenOverseasStatus": {
+        "table_description": "The list of available client's oversea visitor status for associating with referrals and inpatients",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenPCG": {
+        "table_description": "This table holds the information for CCGs for use in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "RO": "The RO of this PCT",
+            "HA": "The health authority of this CCG",
+            "AddressLine1": "Line of the address of this CCG",
+            "AddressLine2": "Line of the address of this CCG",
+            "AddressLine3": "Line of the address of this CCG",
+            "AddressLine4": "Line of the address of this CCG",
+            "AddressLine5": "Line of the address of this CCG",
+            "Postcode": "Postcode of the address of this CCG",
+            "OpenDate": "The date this CCG was formed",
+            "CloseDate": "The date this CCG was closed",
+            "StatusCode": "Status Code",
+            "OrgSubCode": "Org Sub Code",
+            "ContactPhone": "The contact phone number for the CCG",
+            "ContactName": "The contact name for the CCG",
+            "IsCCG": "Is the record a CCG",
+            "CountryCode": "CCG country code",
+            "SortOrder": "Sort order"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "ContactPhone",
+            "ContactName"
+        ],
+        "client_id": [],
+        "date_time": [
+            "OpenDate",
+            "CloseDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.GenPerson": {
+        "table_description": "This table stores personal information about people registered in Rio.",
+        "columns_descriptions": {
+            "GenPersonID": "The internal Rio Code of this person",
+            "Surname": "The person's surname",
+            "FirstName": "The person's first name",
+            "Initials": "Initials of person",
+            "Title": "The person's title",
+            "AddressLine1": "Line of the person's address",
+            "AddressLine2": "Line of the person's address",
+            "AddressLine3": "Line of the person's address",
+            "AddressLine4": "Line of the person's address",
+            "AddressLine5": "Line of the person's address",
+            "PostCode": "Postcode of the person's address",
+            "Phone": "The person's phone number",
+            "MobilePhone": "The person's mobile number",
+            "Fax": "The person's fax number",
+            "Email": "The person's email address",
+            "DeletedPerson": "If set (1) indicates that this person is no longer valid for use on the system",
+            "DeviceID": "S&F Device Name",
+            "Comment": "Free text comment"
+        },
+        "free_text_columns": [
+            "Comment"
+        ],
+        "other_identifiable_columns": [
+            "Surname",
+            "FirstName",
+            "Title",
+            "AddressLine1",
+            "AddressLine2",
+            "AddressLine3",
+            "AddressLine4",
+            "AddressLine5",
+            "Phone",
+            "MobilePhone",
+            "Fax",
+            "Email",
+            "DeviceID",
+            "Initials"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenReferralReason": {
+        "table_description": "This table holds the valid Referral Reason codes for use in the system",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "CDSCode": "The Code that is reported in the common data set reports",
+            "SNOMEDSearch": "SNOMED Search text",
+            "NDTMSFlag": "NDTMSFlag",
+            "SNOMEDCTID": "SNOMED Concept ID",
+            "MHMDS_REFSTATUS": "MHSDS Referral Status Code",
+            "NationalCode_CIDS": "CIDS Internal Code",
+            "NationalCode_CAMHS": "CAMHS Internal Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenReligion": {
+        "table_description": "This table holds the valid religion codes for use in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this religion",
+            "ReligiousAffiliationGroup": "Religions Affiliation Group"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenReligiousAffiliationGroup": {
+        "table_description": "This table holds the top-level SNOMED codes for religions used in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this religion",
+            "SNOMEDCode": "Top level SNOMED Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenRepeatDefinition": {
+        "table_description": "This table contains the repeat definition for appointments/clinics.",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "EndDate": "Record validity period end date",
+            "NumberOfRepeats": "The total number of repeats in the series.",
+            "RepeatType": "The type of repeating to be used, Values are\nDAILY\nWEEKLY\nMONTHLY\nYEARLY",
+            "Interval": "The interval between repeats",
+            "RepeatActivityType": "The type of activity repeating in the series."
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "EndDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.GenServiceTeam": {
+        "table_description": "This table holds the valid codes and details of teams for use in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "LeadHCP": "The HCP responsible for leading the team",
+            "ClassificationGroup": "The classification group of the team",
+            "HomeBasedCare": "If set (1) indicates the team can provide home based care",
+            "DayCare": "If set (1) indicates the team can provide day care services",
+            "AMApptTime": "The time of day that morning appointments start",
+            "PMApptTime": "The time of day that afternoon appointments start",
+            "DefaultDuration": "The default duration of appointments in minutes",
+            "DrugIssueText": "The Text used when drugs are issued by this team",
+            "OrganisationGroup1": "The first organisational group of this team",
+            "OrganisationGroup2": "The second organisational group of this team",
+            "RTTWaitingTimeMeasurementType": "Time Measurement Type",
+            "IsAdministration": "Team is administration only team",
+            "SpineWorkgroupID": "Team Spine Work Group ID",
+            "SpineWorkgroupDesc": "Team Spine Work Group Description",
+            "OCCanTakeSamples": "Team can take samples flag",
+            "CAMHSTeamType": "CAMHS Team Type",
+            "SpecimenCollectionDefaultAcceptor": "Teams default acceptor for Orders",
+            "VARule": "VA Rule"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "AMApptTime",
+            "PMApptTime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.GenSpecialty": {
+        "table_description": "This table holds the valid service codes (specialties) for use in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this specialty",
+            "AmsFlag": "If set (1) indicates that this Code is valid for use in appointments management",
+            "ChildHealthDevCheck": "If set (1) indicates that this Code is a child health review Code",
+            "IsHealthVisiting": "If set (1) indicates that this Code is a health visitor Code",
+            "AllowTransfer": "If set (1) indicates that this Code allows transfer of clients",
+            "SensitiveInfo": "If set (1) indicates that this Code denotes sensitive information may be stored in records containing this Code",
+            "NDTMSFlag": "National Drug Treatment Service Flag",
+            "DAASPrescribing": "This column indicates whether specialty offers substance misuse.",
+            "NationalCode_CIDS": "CIDS Identifier",
+            "DirectAccessService": "Direct Access flag",
+            "NationalCode_ServiceType": "National Service Type code",
+            "MHSDSPerinatalService": "Mental Health Services Data Set (MHSDS) Perinatal Service",
+            "MHSDSPsychotherapyService": "Mental Health Services Data Set (MHSDS) Psychoterapy Service",
+            "DisplayColour": "Internal value",
+            "SNOMEDCode": "Associated SNOMED Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenStaffProfessionalGroup": {
+        "table_description": "This table holds the valid staff professional group codes for use in the system",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this staff professional group",
+            "KC55_HV": "If set (1) this staff professional group is included in the KC55 health visiting statutory (obsolete field - retired report)",
+            "KC56_DN": "If set (1) this staff professional group is included in the KC56 district nursing statutory report (obsolete field - retired report)",
+            "KT23_POD": "If set (1) this staff professional group is included in the KT23 podiatry statutory report (obsolete field - retired report)",
+            "KT26_OT": "If set (1) this staff professional group is included in the KT26 occupational therapy statutory report (obsolete field - retired report) ",
+            "KT27_PHYS": "If set (1) this staff professional group is included in the KT27 physiotherapy statutory report (obsolete field - retired report) ",
+            "KT29_SLT": "If set (1) this staff professional group is included in the KT29 speech and language therapy statutory report (obsolete field - retired report",
+            "KT31_FP": "If set (1) this staff professional group is included in the KT31 family planning statutory report (obsolete field - retired report)",
+            "NationalCode_CIDS": "CSDS National code",
+            "NationalCode_RegisteringBody": "National Registration Body Code for HCP"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenUrgency": {
+        "table_description": "This table holds the valid urgency codes for use in the system.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this urgency",
+            "DefaultFlag": "If set (1) indicates that this value should be used as the default",
+            "IWP": "AMS Interactive worksheet priority code",
+            "SpineCode": "Spine Interaction Code",
+            "CAMHSNationalCode": "Nation Code for CAMHS",
+            "SortOrder": "Pick list Screen order",
+            "AmsAppointmentUrgencyCode": "Associated Appointment Urgency code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenUser": {
+        "table_description": "This table lists the users who can log on to Rio",
+        "columns_descriptions": {
+            "UserNumber": "Internal - not disclosed",
+            "GenUserID": "Internal - not disclosed",
+            "Password": "Internal - not disclosed",
+            "UserTypeID": "Internal - not disclosed",
+            "PasswordExpDate": "Internal - not disclosed",
+            "Disabled": "Internal - not disclosed",
+            "OrganisationType": "Internal - not disclosed",
+            "LoginID": "Internal - not disclosed",
+            "UserPassword": "Internal - not disclosed",
+            "OwnNotes": "Internal - not disclosed",
+            "StudentNotes": "Internal - not disclosed",
+            "EditableLetterAccess": "Internal - not disclosed",
+            "DocListAccess": "Internal - not disclosed",
+            "ChildRecordAccess": "Internal - not disclosed",
+            "WhiteListActive": "Internal - not disclosed",
+            "LastSessionID": "Internal - not disclosed",
+            "NoteType": "Internal - not disclosed",
+            "SubNoteType": "Internal - not disclosed",
+            "StartUpPage": "Internal - not disclosed",
+            "UserIdIsSpineId": "Internal - not disclosed",
+            "SystemAccount": "Internal - not disclosed",
+            "LRExemptionEnabled": "Internal - not disclosed",
+            "WardManager": "Internal - not disclosed",
+            "OCRequestAuthorisationLevel": "Internal - not disclosed",
+            "SAFLoginID": "Internal - not disclosed",
+            "MainRole": "Internal - not disclosed",
+            "AdditionalRole1": "Internal - not disclosed",
+            "AdditionalRole2": "Internal - not disclosed",
+            "PayrollNumber": "Internal - not disclosed",
+            "OtherTrustEmployee": "Internal - not disclosed",
+            "TrustUse1": "Internal - not disclosed",
+            "TrustUse2": "Internal - not disclosed",
+            "TrustUse3": "Internal - not disclosed",
+            "TrustUse4": "Internal - not disclosed",
+            "AdditionalDate1": "Internal - not disclosed",
+            "LastViewedWard": "Internal - not disclosed",
+            "Salt": "Internal - not disclosed",
+            "PasswordType": "Internal - not disclosed",
+            "PasswordAttempts": "Internal - not disclosed",
+            "MaintenanceMode": "Internal - not disclosed"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "UserNumber",
+            "GenUserID",
+            "Password",
+            "UserTypeID",
+            "PasswordExpDate",
+            "Disabled",
+            "OrganisationType",
+            "LoginID",
+            "UserPassword",
+            "OwnNotes",
+            "StudentNotes",
+            "EditableLetterAccess",
+            "DocListAccess",
+            "ChildRecordAccess",
+            "WhiteListActive",
+            "LastSessionID",
+            "NoteType",
+            "SubNoteType",
+            "StartUpPage",
+            "UserIdIsSpineId",
+            "SystemAccount",
+            "LRExemptionEnabled",
+            "WardManager",
+            "OCRequestAuthorisationLevel",
+            "SAFLoginID",
+            "MainRole",
+            "AdditionalRole1",
+            "AdditionalRole2",
+            "PayrollNumber",
+            "OtherTrustEmployee",
+            "TrustUse1",
+            "TrustUse2",
+            "TrustUse3",
+            "TrustUse4",
+            "AdditionalDate1",
+            "LastViewedWard",
+            "Salt",
+            "PasswordType",
+            "PasswordAttempts",
+            "MaintenanceMode"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenUserPrgNoteSubType": {
+        "table_description": "Notes about user's roles",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "PrgNoteType": "Note type (using some internal logic)"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenUserPrgNoteType": {
+        "table_description": "Notes about user's roles",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenVARule": {
+        "table_description": "Internal table",
+        "columns_descriptions": {
+            "Code": "Internal",
+            "CodeDescription": "Internal",
+            "Deleted": "Internal",
+            "CanAutomateCancel": "Internal",
+            "SendQuestionnaire": "Internal"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.GenWflActivityConfigCode": {
+        "table_description": "This table lists all available Message Generator activities.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "UserDefinedActivity": "User Defined Activity",
+            "DocumentType": "Document Type",
+            "ScheduleActivity": "Schedule Activity",
+            "SequenceID": "Unique Sequence ID ",
+            "ShowInWorkflow": "Show in workflow",
+            "sysdefined": "System definition type; values are\n0 - Open item - no locking\n1 - Locked with indication\n2 - Locked and hidden"
+        },
+        "free_text_columns": [
+            "CodeDescription"
+        ],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsAdmissionMethod": {
+        "table_description": "This table contains a list of possible admission methods for an inpatient admission.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this admission method.",
+            "MHCS_NationalCode": "MHSDS National code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsAdmissionReason": {
+        "table_description": "This table contains a list of possible admission reasons for an inpatient admission.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "SortOrder": "Sort order",
+            "Deleted": "Logically deleted flag",
+            "SNOMEDCTID": "Associated SNOMED Code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsAdmissionSource": {
+        "table_description": "This table contains a list of possible admission sources for an inpatient admission",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code for this admission source."
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsBay": {
+        "table_description": "This table contains details of a bay. Bays are contained within wards.",
+        "columns_descriptions": {
+            "WardCode": "The Ward Code of this ward",
+            "BayCode": "The Bay Code of this bay",
+            "BayDescription": "The name of the bay. This text is used for display on the screens showing the wards, and in pick lists.",
+            "deleted": "Logically deleted flag",
+            "Virtual": "If set (1) indicates the bay is virtual"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsBed": {
+        "table_description": "This table contains information about beds including the bed type. Beds are stored within bays.",
+        "columns_descriptions": {
+            "WardCode": "Ward Code",
+            "BayCode": "Bay Code",
+            "BedNumber": "The number of the bed. Beds are numbered sequentially from 1 per bay",
+            "BedType": "The type of the bed as defined in the master table ImsBedType",
+            "CloseFlag": "Obsolete column - Refer to IMSbedclosure table",
+            "BedCreatedDate": "The date the bed was created within the bay",
+            "BedDeletedDate": "The date the bed was deleted from the bay",
+            "SequenceID": "Unique Sequence ID",
+            "Virtual": "If set (1) indicates the bed is virtual"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "BedCreatedDate",
+            "BedDeletedDate"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ImsBedType": {
+        "table_description": "This table contains a list of all possible bed types. ",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "Gender": "The Gender of patient allowed occupying this bed. Valid values are\nF = Female,\nM = Male\nU = Any"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsClientClassification": {
+        "table_description": "This table contains a list of client classifications.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this client classification"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsDischargeAwaitedReason": {
+        "table_description": "This table contains a list of reasons that a discharge may be delayed.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this delay reason",
+            "AttributableTo": "The responsible party for a delayed discharge"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsDischargeAwaitedReasonAttributableTo": {
+        "table_description": "This table contains a list of reasons for who is responmsible for delayed discharge. ",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this delay reason"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsDischargeDestination": {
+        "table_description": "This table contains a list of possible types of destination that a client may be discharged to.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this discharge destination",
+            "HospitalAtHomeService": "Hospital at home service flag",
+            "AddressType": "Discharg Destination address type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsDischargeMethod": {
+        "table_description": "This table contains a list of possible inpatient discharge methods.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this discharge method",
+            "MHMDS_REFSTATUS": "MHSDS Referral Status Code",
+            "MHMDS_NationalCode": "MHSDS National Code",
+            "CAMHSNationalCode": "Nation Code for CAMHS"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsEpisodeType": {
+        "table_description": "This table contains a list of possible inpatient episode types. - This table is obsolete",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this inpatient episode type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsEvent": {
+        "table_description": "This table contains information about the admission and discharge of clients into a ward including the admission date, method and reason.",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "EventNumber": "The event number of this inpatient admission. Event numbers are numbered sequentially from 1 on a per client basis.",
+            "AdmissionDate": "The date and time the admission took place",
+            "AdmissionMethod": "The method used for admission",
+            "AdmissionSource": "The source of the admission",
+            "ClientClassification": "The classification of the client for this admission",
+            "FirstInSeries": "When set (1) indicates that this is the first in a regular series of inpatient admissions for this client",
+            "DischargeReadyDate": "The date and time the client was clinically assessed as ready for discharge",
+            "DischargeAwaitedReason": "The internal Rio identifier for this Discharge Awaited Reason",
+            "DischargeDate": "The date and time the discharge took place",
+            "DischargeDestination": "The destination the client was discharged to",
+            "DischargeMethod": "The method used for discharge of the client",
+            "HighSecurityCategory": "Forensic Mental Health only",
+            "WaitingStartDateA": "Forensic Mental Health only",
+            "WaitingStartDateB": "Forensic Mental Health only",
+            "DecideToAdmitDate": "The date the decision to admit the client was made",
+            "ReferralRequest": "Obsolete field",
+            "IntendedDischargeDate": "Intended Discharge Date",
+            "DischargeComment": "A comment associated with the discharge of the client",
+            "SequenceID": "Sequence ID",
+            "IntendedManagement": "The intended management of the client during the inpatient stay",
+            "DischargeAddressLine1": "Discharge Address Line",
+            "DischargeAddressLine2": "Discharge Address Line",
+            "DischargeAddressLine3": "Discharge Address Line",
+            "DischargeAddressLine4": "Discharge Address Line",
+            "DischargeAddressLine5": "Discharge Address Line",
+            "DischargePostCode": "Discharge Post Code",
+            "AdministrativeCategory": "Administrative Category",
+            "ReferralSource": "The source of the referral to the inpatient service",
+            "ReferringGP": "If the referral source was a GP, the GP making the referral",
+            "ReferringConsultant": "Code of HCP if referred by consultant. The link used is dependent on the behaviour of the referral source. If AmsReferralSource.Behaviour is set to CS then the ReferringConsultant column is derived from GenHospitalConsultant.ConsultantID. Otherwise if AmsReferralSource.Behaviour is set to CH then the column is GenHCP.GenHCPCode.",
+            "Referrer": "If the referral source was neither GP or a consultant, the person making the referral",
+            "AdmissionAllocation": "The PCT of the client at admission",
+            "DischargeAllocation": "The PCT of the client at discharge",
+            "LegalStatus": "For Mental Health the Legal Status of the client at admission",
+            "DischargeDiagnosis1": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis2": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis3": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis4": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis5": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis6": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis7": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis8": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis9": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis10": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis11": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis12": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis13": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosis14": "Diagnosis Code assigned at discharge",
+            "DischargeDiagnosisConfirmed": "The date and time the discharge diagnosis was confirmed",
+            "DischargeDiagnosisBy": "Discharge Diagnosis By",
+            "ReferralReason": "The reason the client was referred to inpatient services",
+            "ReferralID": "Associated Referral ID",
+            "TransformingCareCategory": "Transforming Care Category",
+            "TransformingCareIndicator": "Transforming Care Indicator",
+            "GenOverseasStatus": "Overseas Visitor Status",
+            "ReferringHospitalCode": "Referring Child Birth hospital",
+            "GenSpecialtyCodeFrom": "Specialty referred from",
+            "GenServiceTeamCodeFrom": "Service team referred from",
+            "DischargeReport": "Associated discharge report",
+            "AmsReferralTypeCode": "Referral Type",
+            "ePathwayID": "Associated ePathway",
+            "OrgType": "Referring organisation type",
+            "ReferringOrganisationCode": "Referring organisation",
+            "OutOfAreaReferralReason": "Out of Area referral reason",
+            "GenOverseasChargingCategory": "Clients Overseas Charging category",
+            "OverseasChargingCategoryEndDate": "End date for Clients Overseas Charging category",
+            "ReasonForAdmission": "Reason for admission"
+        },
+        "free_text_columns": [
+            "DischargeComment"
+        ],
+        "other_identifiable_columns": [
+            "DischargeAddressLine1",
+            "DischargeAddressLine2",
+            "DischargeAddressLine3",
+            "DischargeAddressLine4",
+            "DischargeAddressLine5",
+            "Referrer"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "AdmissionDate",
+            "DischargeReadyDate",
+            "DischargeDate",
+            "WaitingStartDateA",
+            "WaitingStartDateB",
+            "DecideToAdmitDate",
+            "IntendedDischargeDate",
+            "DischargeDiagnosisConfirmed"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ImsEventMovement": {
+        "table_description": "This table contains details of the movement of a client between beds and wards during an inpatient stay.",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier for this client",
+            "EventNumber": "Event Number",
+            "SequenceID": "Sequence ID",
+            "StartDateTime": "The start date and time for this movement",
+            "EndDateTime": "The end date and time for this movement",
+            "WardCode": "The Ward Code of the ward the client stayed in for this movement",
+            "BayCode": "The Bay Code of the bay the client stayed in for this movement",
+            "BedNumber": "The Bed Number of the bed the client occupied for this movement",
+            "IdentitySequenceID": "Sequence ID",
+            "EpisodeType": "The type of inpatient episode during this movement (obsolete field)",
+            "PsychiatricPatientStatus": "Psychiatric Patient Status",
+            "Consultant": "The consultant responsible for the client care during the movement",
+            "Specialty": "The specialty of the client care during the movement",
+            "OtherConsultant": "Another consultant involved in the client care during the movement",
+            "MovementTypeFlag": "A flag value calculated by Rio to indicate the type of movement record Calculate the movement type. This is a Bit mask of what has changed from the previous movement record. This is really to enable FCE calculations to be performed from SQL.\nBit 0 = Consultant (1)\nBit 1 = Bed (2)\nBit 2 = Bay (4)\nBit 3 = Ward (8)\nBit 4 = Service (16)\nBit 5 = Named Nurse (32)\nA value of 0 indicate a record was entered without any of the above being changed",
+            "Diagnosis1": "Primary diagnosis",
+            "Diagnosis2": "Secondary diagnosis",
+            "Diagnosis3": "Secondary diagnosis",
+            "Diagnosis4": "Secondary diagnosis",
+            "Diagnosis5": "Secondary diagnosis",
+            "Diagnosis6": "Secondary diagnosis",
+            "Diagnosis7": "Secondary diagnosis",
+            "Diagnosis8": "Secondary diagnosis",
+            "Diagnosis9": "Secondary diagnosis",
+            "Diagnosis10": "Secondary diagnosis",
+            "Diagnosis11": "Secondary diagnosis",
+            "Diagnosis12": "Secondary diagnosis",
+            "Diagnosis13": "Secondary diagnosis",
+            "Diagnosis14": "Secondary diagnosis",
+            "DiagnosisConfirmed": "Date time the diagnosis is confirmed",
+            "DiagnosisBy": "Internal Rio identifier of who made the diagnosis",
+            "Service": "Service",
+            "ServiceChargeRate": "Service Charge Rate",
+            "WardStayType": "Ward stay Type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "StartDateTime",
+            "EndDateTime",
+            "DiagnosisConfirmed"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ImsEventNamedNurse": {
+        "table_description": "This table records the details of the named nurse allocation for a client during an inpatient stay.",
+        "columns_descriptions": {
+            "ClientID": "The internal Rio identifier of the client associated with this record",
+            "EventNumber": "The event number for this inpatient stay",
+            "GenHcpCode": "The internal Rio Code for the HCP designated as the client's named nurse",
+            "StartDateTime": "The start date and time of the care by the named nurse",
+            "EndDateTime": "The end date and time of the care by the named nurse",
+            "SequenceID": "Sequence ID",
+            "EventMovementID": "Event Movement ID",
+            "EndedOnDeath": "Ended on death flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "StartDateTime",
+            "EndDateTime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ImsIntendedManagement": {
+        "table_description": "This table contains a list of intended management types.",
+        "columns_descriptions": {
+            "Code": "Unique Code of management type",
+            "CodeDescription": "Description of management type",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this intended management"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsLegalStatusClassification": {
+        "table_description": "This table contains a list of legal statuses for an inpatient event",
+        "columns_descriptions": {
+            "Code": "Unique Code of legal status",
+            "CodeDescription": "Description of legal status",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this legal status classification",
+            "ECDSStartDateNotRequired": "Exclude associated records from the ECDS extract"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsPsychiatricPatientStatus": {
+        "table_description": "This table contains a list of psychiatric statuses that are valid for an inpatient event.",
+        "columns_descriptions": {
+            "Code": "Unique Code of psychiatric status",
+            "CodeDescription": "Description of psychiatric status",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "The National code of this psychiatric patient status"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsWard": {
+        "table_description": "This table contains details of wards including the hospital site that they are associated with.",
+        "columns_descriptions": {
+            "WardCode": "The Ward Code the this ward",
+            "WardDescription": "The name of the ward. This Text is used for display on the screens showing the wards, and in pick lists",
+            "WardOperationalPlan": "The operational plan used for this ward",
+            "HospitalSite": "The hospital site where this ward is situated",
+            "SequenceID": "Sequence ID",
+            "NumAvailableBeds": "Number of available beds",
+            "NumBudgetedBeds": "Number of budgeted beds",
+            "NumRegBeds": "Number of registered beds",
+            "SecurityLevel": "Security Level of the ward (primarily for Mental health)",
+            "deleted": "Logically deleted flag",
+            "Virtual": "If set (1) indicates the ward is a virtual ward"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsWardOperationalPlan": {
+        "table_description": "This table contains information about the operational plan for a ward including the dates that the ward became available for use, any intended age groups and the intended Gender of the ward.",
+        "columns_descriptions": {
+            "WardOperationalPlan": "The internal Rio Code of this operational plan",
+            "StartDateTime": "The date and time this plan became active",
+            "EndDateTime": "The date and time this plan became inactive",
+            "Deleted": "Logically deleted flag",
+            "AgeGroupIntended": "The intended age group of clients for wards using this plan",
+            "BroadPatientGroup": "The intended group of clients for wards using this plan",
+            "Specialty": "The specialty of care given in wards using this plan",
+            "ClinicalCareIntensity": "The intensity of care given in wards using this plan",
+            "Gender": "The Gender of patients intended for wards using this plan\nM = Male\nF = Female\nU = Any",
+            "TotalConsultantBeds": "The total number of consultant beds available in wards using this plan",
+            "SequenceID": "Unique Sequence ID",
+            "Virtual": "If set (1) indicates the plan is for a virtual ward",
+            "MHMDS_SecurityLevel": "Security level for MHSDS",
+            "TherapeuticObs": "Theraputic Observation available for ward"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [
+            "StartDateTime",
+            "EndDateTime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.ImsWardSecurityLevel": {
+        "table_description": "This Picklist table contains possible security levels for a ward.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsWardSecurityLevel_MHMDS": {
+        "table_description": "This Picklist table contains possible security levels for a ward to be used in MHSDS.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code",
+            "SortOrder": "Picklist sort order",
+            "LockedWard": "Ward has locked access"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.ImsWardStayType": {
+        "table_description": "This Picklist table contains possible ward stay type's levels for use in CDS.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.OrgType": {
+        "table_description": "Pick list table that contains available organisations type in Rio",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "Deleted": "Logically deleted flag",
+            "NationalCode": "National code",
+            "Filename": "Organisation File name (system defined records only)",
+            "SysDefined": "System defined organisation type"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [
+            "Filename"
+        ],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.PrgProgressNote": {
+        "table_description": "Table for Progress Note Record (large table with many records)",
+        "columns_descriptions": {
+            "SequenceID": "Sequence ID",
+            "ClientID": "The internal Rio identifier of the client associated with this record",
+            "DateAndTime": "When created",
+            "UserID": "User ID (who created)",
+            "NoteNum": "Note numeric identifier",
+            "NoteText": "Free text with note",
+            "NoteType": "Type of note",
+            "Significant": "Is signifficant",
+            "RiskRelated": "Is risk related",
+            "VerifyDate": "When was verified",
+            "VerifyUserID": "By which user was verified",
+            "Problem": "Problem description (not in use)",
+            "EnteredBy": "Entered by user",
+            "EnterDatetime": "When was entered",
+            "ThirdPartyInfo": "Info about third party",
+            "RiskType": "Risk Type reference",
+            "EnteredInError": "Is entered in with error",
+            "SubNoteType": "Sub note type",
+            "ClinicalEventType": "Clinical Event TYpe",
+            "SpecialtyID": "Specialty ID",
+            "RoleID": "Role ID",
+            "HTMLIncludedFlag": "Internal value",
+            "Conceal": "Is conceal",
+            "SubNum": "Sub number",
+            "AutoSaved": "Is auto saved",
+            "AdmissionID": "Associated admission ID",
+            "ReferralID": "Associated Referral ID"
+        },
+        "free_text_columns": [
+            "NoteText",
+            "Problem"
+        ],
+        "other_identifiable_columns": [
+            "UserID"
+        ],
+        "client_id": [
+            "ClientID"
+        ],
+        "date_time": [
+            "DateAndTime",
+            "VerifyDate",
+            "EnterDatetime"
+        ],
+        "date_of_birth": []
+    },
+    "dbo.RTTPathwayDuration": {
+        "table_description": "This table contains all the different available durations for the RTT pathways.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "NumberOfDays": "Pathway duration in days",
+            "SortOrder": "Display order field",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.RTTPathwayConfig": {
+        "table_description": "This table contains all the configuration data for the RTT pathways",
+        "columns_descriptions": {
+            "SequenceID": "Unique Sequence ID",
+            "RTTCode": "Look up value for RTT",
+            "RTTNameCode": "Look up value for pathway name",
+            "RTTDuration": "Look up value for duration",
+            "WarningToBreach": "Number of days warning to breach",
+            "Deleted": "Logically deleted flag",
+            "LocalOnly": "The pathway is available for local only use"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.RTTPathwayName": {
+        "table_description": "This table contains all the available RTT pathways.",
+        "columns_descriptions": {
+            "Code": "Internal Rio Code",
+            "CodeDescription": "Desciption",
+            "SortOrder": "Sort order",
+            "Deleted": "Logically deleted flag"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    },
+    "dbo.WLConfig": {
+        "table_description": "This table stores details of the different waiting lists and the details of how they have been configured",
+        "columns_descriptions": {
+            "SequenceID": "Unique identifier for the row",
+            "WLCode": "Lookup value for waiting list",
+            "WLName": "Description of waiting list",
+            "IsInpatient": "Flag to determine if patient is an in patient",
+            "IsAutomatic": "Flag to determine how the client is added to and removed from the waiting list",
+            "GenSpecialtyCode": "Look up value for associated Specialty ",
+            "GenTeamCode": "Look up value for associated Team",
+            "GenHCPCode": "Look up value for associated HCP",
+            "TargetTime": "Target time for waiting list in days",
+            "WarningPeriod": "Warning Period for waiting list in days",
+            "NationalReportInclusion": "Used to identify if this particular waiting list should be included in gathering data for a specific national report.",
+            "LocalReportInclusion": "Used to identify if this particular waiting list should be included in gathering data for a specific local report.",
+            "UserDefined": "Set to 1 to identify whether this is a 'User' defined waiting list or a 'System' defined waiting list",
+            "Deleted": "Logically deleted flag",
+            "AutoAccept": "Flag to allow items to be accepted on to the waiting list without intervention"
+        },
+        "free_text_columns": [],
+        "other_identifiable_columns": [],
+        "client_id": [],
+        "date_time": [],
+        "date_of_birth": []
+    }
+}
